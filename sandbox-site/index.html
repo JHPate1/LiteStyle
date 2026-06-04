@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LiteStyle Component Sandbox</title>
+  <link rel="stylesheet" href="/src/theme.css">
+  <link rel="stylesheet" href="/src/framework.css">
+  <style>
+    :root {
+      --sb-bg: #06080c;
+      --sb-border: #1a1f2a;
+      --sb-text: #9aa4b2;
+      --sb-accent: #4f8cff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: var(--sb-bg);
+      color: var(--sb-text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, input, select, textarea { font: inherit; }
+
+    .sandbox-hero {
+      padding: var(--ls-page-pad, 24px);
+      border-bottom: 1px solid var(--ls-border);
+    }
+
+    .sandbox-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--ls-page-pad, 24px);
+    }
+
+    .sample-icon {
+      width: 2rem;
+      height: 2rem;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      color: var(--ls-on-accent);
+      background: var(--ls-accent);
+    }
+  </style>
+<base target="_blank">
+</head>
+<body>
+  <div id="ultra-sandbox-root" class="ls-shell" data-badge-type="subtle" data-btn-type="solid">
+    <nav class="ls-navbar">
+      <a class="ls-brand" href="#">
+        <span class="ls-logo"></span>
+        <span>LiteStyle</span>
+      </a>
+      <div class="ls-navlinks">
+        <a class="ls-navlink active" href="#">Preview</a>
+        <a class="ls-navlink" href="#">Dashboard</a>
+        <a class="ls-navlink" href="#">Docs</a>
+      </div>
+      <div class="ls-row">
+        <span class="badge-accent">Live Theme</span>
+        <button class="ls-btn ls-btn-outline ls-btn-sm">Export</button>
+      </div>
+    </nav>
+
+    <header class="sandbox-hero">
+      <div class="sandbox-content ls-grid ls-grid-2" style="align-items:center;">
+        <div class="ls-stack">
+          <span class="ls-badge ls-badge-soft">Modular CSS Library</span>
+          <h1 class="ls-heading">A customizable component system driven by theme tokens.</h1>
+          <p class="ls-copy">Buttons, badges, navbars, sidebars, cards, tables, alerts, avatars, forms, progress, tabs, chips, switches, and timelines are all styled by the engine.</p>
+          <div class="ls-row ls-wrap">
+            <button class="ls-btn ls-btn-solid btn-primary">Primary Action</button>
+            <button class="ls-btn ls-btn-soft">Secondary</button>
+            <button class="ls-btn ls-btn-outline">Outline</button>
+            <button class="ls-btn ls-btn-gradient">Gradient</button>
+          </div>
+        </div>
+        <div class="ls-card ls-card-interactive ls-stack">
+          <div class="ls-row ls-between">
+            <div class="ls-row">
+              <span class="sample-icon">UI</span>
+              <div>
+                <strong>Theme Preview</strong>
+                <p class="ls-meta" style="margin:.2rem 0 0;">Synced from LiteStyle Studio</p>
+              </div>
+            </div>
+            <span class="ls-avatar">LS</span>
+          </div>
+          <div class="ls-progress"><div class="ls-progress-fill" style="--ls-progress-value:82%;"></div></div>
+          <div class="ls-row ls-wrap">
+            <span class="badge-accent">Dynamic badge</span>
+            <span class="ls-badge ls-badge-soft ls-badge-success">Success</span>
+            <span class="ls-badge ls-badge-outline ls-badge-warning">Warning</span>
+            <span class="ls-badge ls-badge-neon ls-badge-danger">Risk</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="sandbox-content ls-stack">
+      <section class="ls-grid ls-grid-4">
+        <div class="ls-card ls-stat">
+          <span class="ls-stat-label">Components</span>
+          <strong class="ls-stat-value">42</strong>
+          <span class="ls-meta">Reusable classes</span>
+        </div>
+        <div class="ls-card ls-stat">
+          <span class="ls-stat-label">Tokens</span>
+          <strong class="ls-stat-value">64</strong>
+          <span class="ls-meta">Theme variables</span>
+        </div>
+        <div class="ls-card ls-stat">
+          <span class="ls-stat-label">Status</span>
+          <strong class="ls-stat-value">Live</strong>
+          <span class="ls-switch active"></span>
+        </div>
+        <div class="ls-card ls-stat">
+          <span class="ls-stat-label">Progress</span>
+          <strong class="ls-stat-value">91%</strong>
+          <div class="ls-progress"><div class="ls-progress-fill" style="--ls-progress-value:91%;"></div></div>
+        </div>
+      </section>
+
+      <section class="ls-grid ls-grid-2">
+        <div class="ls-card ls-stack">
+          <div>
+            <p class="ls-section-title">Controls</p>
+            <h2 style="margin:.35rem 0 0;">Buttons and fields</h2>
+          </div>
+          <div class="ls-row ls-wrap">
+            <button class="ls-btn ls-btn-solid btn-primary">Solid</button>
+            <button class="ls-btn ls-btn-glass">Glass</button>
+            <button class="ls-btn ls-btn-ghost">Ghost</button>
+            <button class="ls-btn ls-btn-danger">Danger</button>
+            <button class="ls-btn ls-icon-btn" aria-label="Add">+</button>
+          </div>
+          <div class="ls-grid ls-grid-2">
+            <label><span class="ls-label">Name</span><input class="ls-field form-field" value="LiteStyle Project"></label>
+            <label><span class="ls-label">Plan</span><select class="ls-field ls-select"><option>Studio Pro</option></select></label>
+          </div>
+          <textarea class="ls-field ls-textarea">Every control is built from the framework classes and changes when theme.css is regenerated.</textarea>
+        </div>
+
+        <div class="ls-card ls-stack">
+          <div class="ls-row ls-between">
+            <div>
+              <p class="ls-section-title">Navigation</p>
+              <h2 style="margin:.35rem 0 0;">Sidebar pattern</h2>
+            </div>
+            <div class="ls-tabs">
+              <span class="ls-tab active">Grid</span>
+              <span class="ls-tab">List</span>
+            </div>
+          </div>
+          <div class="ls-dashboard" style="min-height:300px;grid-template-columns:220px 1fr;border:1px solid var(--ls-border);border-radius:var(--ls-card-radius);overflow:hidden;">
+            <aside class="ls-sidebar">
+              <div class="ls-sidebar-nav">
+                <a class="ls-navlink active" href="#">Overview</a>
+                <a class="ls-navlink" href="#">Components</a>
+                <a class="ls-navlink" href="#">Tokens</a>
+                <a class="ls-navlink" href="#">Deploys</a>
+              </div>
+            </aside>
+            <div class="ls-main ls-stack">
+              <div class="ls-alert"><strong>Custom theme</strong><span class="ls-meta">Save in the dashboard to sync this sandbox.</span></div>
+              <div class="ls-row ls-wrap">
+                <span class="ls-chip">Responsive</span>
+                <span class="ls-chip">Tokenized</span>
+                <span class="ls-chip">Accessible base</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="ls-grid ls-grid-2">
+        <div class="ls-card ls-stack">
+          <div>
+            <p class="ls-section-title">Data</p>
+            <h2 style="margin:.35rem 0 0;">Inventory table</h2>
+          </div>
+          <table class="ls-table">
+            <thead><tr><th>Class</th><th>Purpose</th><th>State</th></tr></thead>
+            <tbody>
+              <tr><td>.ls-navbar</td><td>Top navigation</td><td><span class="ls-badge ls-badge-soft ls-badge-success">Ready</span></td></tr>
+              <tr><td>.ls-sidebar</td><td>App shell menus</td><td><span class="ls-badge ls-badge-soft">Ready</span></td></tr>
+              <tr><td>.ls-table</td><td>Data display</td><td><span class="ls-badge ls-badge-outline ls-badge-warning">New</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="ls-card ls-stack">
+          <div>
+            <p class="ls-section-title">Timeline</p>
+            <h2 style="margin:.35rem 0 0;">Build flow</h2>
+          </div>
+          <div class="ls-timeline">
+            <div class="ls-timeline-item"><div><strong>Design tokens saved</strong><p class="ls-copy">The engine writes theme.json and regenerates theme.css.</p></div></div>
+            <div class="ls-timeline-item"><div><strong>Framework classes render</strong><p class="ls-copy">All primitives use the same CSS variable contract.</p></div></div>
+            <div class="ls-timeline-item"><div><strong>Sandbox refreshes</strong><p class="ls-copy">This page polls config and applies current variants.</p></div></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    async function syncFromThemeConfig() {
+      try {
+        const response = await fetch('/api/v1/config');
+        const data = await response.json();
+        const root = document.getElementById('ultra-sandbox-root');
+        if (data.badgeType) root.setAttribute('data-badge-type', data.badgeType);
+        if (data.btnPrimaryType) root.setAttribute('data-btn-type', data.btnPrimaryType);
+      } catch {
+        // The sandbox still works as a static preview when the engine is offline.
+      }
+    }
+
+    setInterval(syncFromThemeConfig, 1500);
+    window.addEventListener('DOMContentLoaded', syncFromThemeConfig);
+  </script>
+</body>
+</html>

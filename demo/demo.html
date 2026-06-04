@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LiteStyle Static Demo</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ls-font-base: Inter, ui-sans-serif, system-ui, sans-serif;
+      --ls-accent: #00b200;
+      --ls-accent-2: #14b8a6;
+      --ls-success: #22c55e;
+      --ls-warning: #f59e0b;
+      --ls-danger: #ef4444;
+      --ls-on-accent: #ffffff;
+      --ls-bg-main: #08090d;
+      --ls-bg-surface: #151923;
+      --ls-text-main: #f5f7fb;
+      --ls-text-muted: #98a2b3;
+      --ls-border: #252a35;
+      --ls-page-pad: 20px;
+      --ls-card-bg: #11141c;
+      --ls-card-border: #252a35;
+      --ls-card-border-weight: 1px;
+      --ls-card-radius: 16px;
+      --ls-card-padding: 16px;
+      --ls-card-shadow: 0 16px 44px rgba(0,0,0,.22);
+      --ls-btn-radius: 12px;
+      --ls-btn-padding: 10px 16px;
+      --ls-btn-height: 40px;
+      --ls-btn-font-size: 14px;
+      --ls-btn-weight: 700;
+      --ls-btn-active-scale: .97;
+      --ls-btn-glow: 22px;
+      --ls-badge-bg: #2563eb;
+      --ls-badge-text: #60a5fa;
+      --ls-badge-radius: 999px;
+      --ls-badge-padding: 4px 10px;
+      --ls-badge-font-size: 11px;
+      --ls-badge-weight: 700;
+      --ls-badge-transform: uppercase;
+      --ls-badge-glow: 14px;
+      --ls-input-bg: #0e1118;
+      --ls-input-border: #252a35;
+      --ls-input-border-weight: 1px;
+      --ls-input-radius: 12px;
+      --ls-input-padding: 10px 12px;
+      --ls-input-height: 42px;
+      --ls-input-focus-glow: 0 0 0 3px rgba(37,99,235,.18);
+      --ls-nav-active-bg: rgba(37,99,235,.12);
+      --ls-nav-active-border: 0 solid transparent;
+      --ls-nav-link-spacing: 8px 12px;
+      --ls-nav-radius: 12px;
+      --ls-navbar-bg: rgba(21,25,35,.86);
+      --ls-navbar-height: 64px;
+      --ls-sidebar-bg: #0c1017;
+      --ls-sidebar-width: 238px;
+      --ls-progress-height: 8px;
+      --ls-progress-track-bg: #252a35;
+      --ls-alert-radius: 12px;
+      --ls-alert-bg: rgba(37,99,235,.12);
+      --ls-alert-border: rgba(37,99,235,.24);
+      --ls-alert-text: #dbeafe;
+      --ls-avatar-size: 38px;
+      --ls-avatar-radius: 999px;
+      --ls-tabs-bg: rgba(255,255,255,.05);
+      --ls-tab-active-bg: #151923;
+      --ls-chip-radius: 999px;
+      --ls-chip-bg: rgba(255,255,255,.06);
+      --ls-logo-radius: 10px;
+      --ls-grid-gap: 14px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ls-text-main);
+      background: var(--ls-bg-main);
+      font-family: var(--ls-font-base);
+    }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+
+    .demo-shell {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, color-mix(in srgb, var(--ls-accent) 20%, transparent), transparent 30rem),
+        var(--ls-bg-main);
+    }
+    .demo-topbar {
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--ls-border);
+      background: #070a10;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      color: var(--ls-text-main);
+    }
+    .logo {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: var(--ls-logo-radius);
+      color: var(--ls-on-accent);
+      background: var(--ls-accent);
+      box-shadow: 0 10px 22px color-mix(in srgb, var(--ls-accent) 34%, transparent);
+    }
+    .demo-layout {
+      display: grid;
+      grid-template-columns: 340px minmax(0, 1fr);
+      min-height: calc(100vh - 56px);
+    }
+    .editor {
+      border-right: 1px solid var(--ls-border);
+      background: color-mix(in srgb, var(--ls-bg-surface) 80%, #05070b);
+    }
+    .editor-scroll {
+      display: grid;
+      gap: 12px;
+      max-height: calc(100vh - 56px);
+      overflow: auto;
+      padding: 14px;
+    }
+    .editor-card,
+    .card {
+      padding: var(--ls-card-padding);
+      border: var(--ls-card-border-weight) solid var(--ls-card-border);
+      border-radius: var(--ls-card-radius);
+      background: var(--ls-card-bg);
+      box-shadow: var(--ls-card-shadow);
+    }
+    .editor-card {
+      --ls-card-padding: 13px;
+      display: grid;
+      gap: 10px;
+      box-shadow: none;
+    }
+    .control-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      color: var(--ls-text-main);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .hint, .meta {
+      color: var(--ls-text-muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .control-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+    }
+    .field {
+      display: grid;
+      gap: 5px;
+      min-width: 0;
+    }
+    .field label {
+      color: var(--ls-text-muted);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    .control {
+      width: 100%;
+      height: 34px;
+      min-width: 0;
+      padding: 0 9px;
+      border: 1px solid var(--ls-border);
+      border-radius: 8px;
+      color: var(--ls-text-main);
+      background: var(--ls-bg-main);
+      outline: none;
+      font-size: 12px;
+    }
+    .control:focus {
+      border-color: var(--ls-accent);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--ls-accent) 18%, transparent);
+    }
+    .color-control {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 6px;
+    }
+    .color-control input[type="color"] {
+      width: 34px;
+      height: 34px;
+      padding: 0;
+      border: 1px solid var(--ls-border);
+      border-radius: 8px;
+      background: transparent;
+    }
+    .editor-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .preview {
+      min-width: 0;
+      overflow: auto;
+    }
+    .navbar {
+      min-height: var(--ls-navbar-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 10px var(--ls-page-pad);
+      border-bottom: 1px solid var(--ls-border);
+      background: var(--ls-navbar-bg);
+      backdrop-filter: blur(14px);
+    }
+    .navlinks, .row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .navlink {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: var(--ls-nav-link-spacing);
+      border-radius: var(--ls-nav-radius);
+      color: var(--ls-text-muted);
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .navlink.active {
+      color: var(--ls-text-main);
+      background: var(--ls-nav-active-bg);
+      border-left: var(--ls-nav-active-border);
+      font-weight: 700;
+    }
+    .app {
+      display: grid;
+      grid-template-columns: var(--ls-sidebar-width) minmax(0, 1fr);
+      min-height: calc(100vh - 120px);
+    }
+    .sidebar {
+      padding: 16px;
+      border-right: 1px solid var(--ls-border);
+      background: var(--ls-sidebar-bg);
+    }
+    .sidebar-nav {
+      display: grid;
+      gap: 6px;
+      margin-top: 14px;
+    }
+    .main {
+      min-width: 0;
+      display: grid;
+      gap: var(--ls-grid-gap);
+      padding: var(--ls-page-pad);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--ls-grid-gap);
+    }
+    .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stack { display: grid; gap: 12px; }
+    .between { justify-content: space-between; }
+    .section-title {
+      margin: 0;
+      color: var(--ls-text-muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 8px; font-size: clamp(28px, 4vw, 44px); line-height: 1.05; }
+    h2 { margin-bottom: 0; font-size: 18px; }
+    p { color: var(--ls-text-muted); line-height: 1.55; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: var(--ls-btn-height);
+      padding: var(--ls-btn-padding);
+      border: 1px solid transparent;
+      border-radius: var(--ls-btn-radius);
+      color: var(--ls-on-accent);
+      font-size: var(--ls-btn-font-size);
+      font-weight: var(--ls-btn-weight);
+      text-decoration: none;
+      transition: transform .12s ease, background .16s ease, border-color .16s ease, box-shadow .16s ease;
+    }
+    .btn:active { transform: scale(var(--ls-btn-active-scale)); }
+    .btn.solid,
+    [data-btn-type="solid"] .btn.primary {
+      background: var(--ls-accent);
+      box-shadow: 0 12px var(--ls-btn-glow) color-mix(in srgb, var(--ls-accent) 32%, transparent);
+    }
+    .btn.soft {
+      color: var(--ls-accent);
+      background: color-mix(in srgb, var(--ls-accent) 14%, transparent);
+      border-color: color-mix(in srgb, var(--ls-accent) 24%, transparent);
+    }
+    .btn.outline {
+      color: var(--ls-text-main);
+      background: transparent;
+      border-color: var(--ls-border);
+    }
+    .btn.ghost {
+      color: var(--ls-text-muted);
+      background: transparent;
+    }
+    .btn.glass,
+    [data-btn-type="glass"] .btn.primary {
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.12);
+      backdrop-filter: blur(12px);
+    }
+    .btn.gradient,
+    [data-btn-type="gradient"] .btn.primary {
+      background: linear-gradient(135deg, var(--ls-accent), var(--ls-accent-2));
+    }
+    .btn.danger { background: var(--ls-danger); }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 22px;
+      padding: var(--ls-badge-padding);
+      border-radius: var(--ls-badge-radius);
+      color: var(--ls-badge-text);
+      font-size: var(--ls-badge-font-size);
+      font-weight: var(--ls-badge-weight);
+      text-transform: var(--ls-badge-transform);
+      letter-spacing: .04em;
+    }
+    .badge.solid,
+    [data-badge-type="solid"] .badge.dynamic {
+      color: var(--ls-on-accent);
+      background: var(--ls-badge-bg);
+    }
+    .badge.soft,
+    [data-badge-type="subtle"] .badge.dynamic {
+      color: var(--ls-badge-text);
+      background: color-mix(in srgb, var(--ls-badge-bg) 16%, transparent);
+    }
+    .badge.outline,
+    [data-badge-type="outline"] .badge.dynamic {
+      color: var(--ls-badge-text);
+      background: transparent;
+      border: 1px solid var(--ls-badge-bg);
+    }
+    .badge.neon,
+    [data-badge-type="neon"] .badge.dynamic {
+      color: var(--ls-badge-text);
+      background: transparent;
+      border: 1px solid var(--ls-badge-bg);
+      box-shadow: 0 0 var(--ls-badge-glow) color-mix(in srgb, var(--ls-badge-bg) 70%, transparent);
+    }
+    .badge.success { --ls-badge-bg: var(--ls-success); --ls-badge-text: var(--ls-success); }
+    .badge.warning { --ls-badge-bg: var(--ls-warning); --ls-badge-text: var(--ls-warning); }
+    .badge.danger { --ls-badge-bg: var(--ls-danger); --ls-badge-text: var(--ls-danger); }
+    .input {
+      width: 100%;
+      min-height: var(--ls-input-height);
+      padding: var(--ls-input-padding);
+      border: var(--ls-input-border-weight) solid var(--ls-input-border);
+      border-radius: var(--ls-input-radius);
+      color: var(--ls-text-main);
+      background: var(--ls-input-bg);
+      outline: none;
+    }
+    .input:focus {
+      border-color: var(--ls-accent);
+      box-shadow: var(--ls-input-focus-glow);
+    }
+    .label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--ls-text-muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    .progress {
+      height: var(--ls-progress-height);
+      overflow: hidden;
+      border-radius: 999px;
+      background: var(--ls-progress-track-bg);
+    }
+    .progress span {
+      display: block;
+      width: 78%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--ls-accent), var(--ls-accent-2));
+    }
+    .alert {
+      display: flex;
+      gap: 10px;
+      padding: 13px 14px;
+      border: 1px solid var(--ls-alert-border);
+      border-radius: var(--ls-alert-radius);
+      color: var(--ls-alert-text);
+      background: var(--ls-alert-bg);
+    }
+    .avatar {
+      width: var(--ls-avatar-size);
+      height: var(--ls-avatar-size);
+      display: inline-grid;
+      place-items: center;
+      border-radius: var(--ls-avatar-radius);
+      color: var(--ls-on-accent);
+      background: linear-gradient(135deg, var(--ls-accent), var(--ls-accent-2));
+      font-weight: 800;
+    }
+    .tabs {
+      display: inline-flex;
+      gap: 4px;
+      padding: 4px;
+      border: 1px solid var(--ls-border);
+      border-radius: 12px;
+      background: var(--ls-tabs-bg);
+    }
+    .tab {
+      padding: 7px 11px;
+      border-radius: 8px;
+      color: var(--ls-text-muted);
+      font-size: 13px;
+    }
+    .tab.active {
+      color: var(--ls-text-main);
+      background: var(--ls-tab-active-bg);
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 5px 10px;
+      border: 1px solid var(--ls-border);
+      border-radius: var(--ls-chip-radius);
+      background: var(--ls-chip-bg);
+      color: var(--ls-text-main);
+      font-size: 13px;
+    }
+    .switch {
+      width: 44px;
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      padding: 3px;
+      border-radius: 999px;
+      background: var(--ls-accent);
+    }
+    .switch::after {
+      content: "";
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: #fff;
+      transform: translateX(20px);
+    }
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: var(--ls-card-radius);
+    }
+    .table th,
+    .table td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--ls-border);
+      text-align: left;
+      font-size: 13px;
+    }
+    .table th {
+      color: var(--ls-text-muted);
+      background: rgba(255,255,255,.035);
+      font-size: 11px;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    .timeline {
+      display: grid;
+      gap: 13px;
+    }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 12px minmax(0, 1fr);
+      gap: 10px;
+    }
+    .timeline-item::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      margin-top: 5px;
+      border-radius: 999px;
+      background: var(--ls-accent);
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--ls-accent) 16%, transparent);
+    }
+    .toast {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 20;
+      max-width: 280px;
+      padding: 12px 14px;
+      border: 1px solid var(--ls-border);
+      border-radius: 12px;
+      color: var(--ls-text-main);
+      background: var(--ls-bg-surface);
+      box-shadow: 0 18px 44px rgba(0,0,0,.34);
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: opacity .18s ease, transform .18s ease;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .demo-layout, .app, .grid, .grid.two { grid-template-columns: 1fr; }
+      .editor-scroll { max-height: none; }
+      .editor { border-right: 0; border-bottom: 1px solid var(--ls-border); }
+      .sidebar { border-right: 0; border-bottom: 1px solid var(--ls-border); }
+      .navlinks { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-shell" id="root" data-btn-type="solid" data-badge-type="subtle">
+    <header class="demo-topbar">
+      <div class="brand"><span class="logo"></span><span>LiteStyle Static Demo</span></div>
+      <div class="row">
+        <span class="badge dynamic">Live editor</span>
+        <button class="btn outline" id="resetBtn">Reset</button>
+      </div>
+    </header>
+
+    <div class="demo-layout">
+      <aside class="editor">
+        <div class="editor-scroll">
+          <div class="editor-card">
+            <div class="control-title">Foundation <span class="hint">colors</span></div>
+            <div class="control-grid">
+              <div class="field color-field" data-key="accent"><label>Accent</label></div>
+              <div class="field color-field" data-key="accent2"><label>Accent 2</label></div>
+              <div class="field color-field" data-key="bgMain"><label>Page BG</label></div>
+              <div class="field color-field" data-key="bgSurface"><label>Surface</label></div>
+              <div class="field color-field" data-key="textMain"><label>Text</label></div>
+              <div class="field color-field" data-key="textMuted"><label>Muted</label></div>
+              <div class="field color-field" data-key="border"><label>Border</label></div>
+              <div class="field"><label>Page Pad</label><input class="control token" data-key="pagePad"></div>
+            </div>
+          </div>
+
+          <div class="editor-card">
+            <div class="control-title">Buttons <span class="hint">variants</span></div>
+            <div class="control-grid">
+              <div class="field">
+                <label>Primary Style</label>
+                <select class="control token" data-key="btnType">
+                  <option value="solid">Solid</option>
+                  <option value="glass">Glass</option>
+                  <option value="gradient">Gradient</option>
+                </select>
+              </div>
+              <div class="field"><label>Radius</label><input class="control token" data-key="btnRadius"></div>
+              <div class="field"><label>Padding</label><input class="control token" data-key="btnPadding"></div>
+              <div class="field"><label>Height</label><input class="control token" data-key="btnHeight"></div>
+              <div class="field"><label>Font Size</label><input class="control token" data-key="btnFontSize"></div>
+              <div class="field"><label>Weight</label><input class="control token" data-key="btnWeight"></div>
+            </div>
+          </div>
+
+          <div class="editor-card">
+            <div class="control-title">Badges <span class="hint">status labels</span></div>
+            <div class="control-grid">
+              <div class="field">
+                <label>Dynamic Style</label>
+                <select class="control token" data-key="badgeType">
+                  <option value="solid">Solid</option>
+                  <option value="subtle">Subtle</option>
+                  <option value="outline">Outline</option>
+                  <option value="neon">Neon</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Case</label>
+                <select class="control token" data-key="badgeTransform">
+                  <option value="uppercase">Uppercase</option>
+                  <option value="capitalize">Capitalize</option>
+                  <option value="none">None</option>
+                </select>
+              </div>
+              <div class="field color-field" data-key="badgeBg"><label>Badge BG</label></div>
+              <div class="field color-field" data-key="badgeText"><label>Badge Text</label></div>
+              <div class="field"><label>Radius</label><input class="control token" data-key="badgeRadius"></div>
+              <div class="field"><label>Padding</label><input class="control token" data-key="badgePadding"></div>
+            </div>
+          </div>
+
+          <div class="editor-card">
+            <div class="control-title">Forms and Layout <span class="hint">surface system</span></div>
+            <div class="control-grid">
+              <div class="field color-field" data-key="inputBg"><label>Input BG</label></div>
+              <div class="field color-field" data-key="inputBorder"><label>Input Border</label></div>
+              <div class="field"><label>Input Radius</label><input class="control token" data-key="inputRadius"></div>
+              <div class="field"><label>Input Height</label><input class="control token" data-key="inputHeight"></div>
+              <div class="field color-field" data-key="cardBg"><label>Card BG</label></div>
+              <div class="field color-field" data-key="cardBorder"><label>Card Border</label></div>
+              <div class="field"><label>Card Radius</label><input class="control token" data-key="cardRadius"></div>
+              <div class="field"><label>Card Pad</label><input class="control token" data-key="cardPadding"></div>
+            </div>
+          </div>
+
+          <div class="editor-card">
+            <div class="control-title">Navigation and Modules <span class="hint">shell UI</span></div>
+            <div class="control-grid">
+              <div class="field color-field" data-key="navbarBg"><label>Navbar BG</label></div>
+              <div class="field color-field" data-key="sidebarBg"><label>Sidebar BG</label></div>
+              <div class="field color-field" data-key="navActiveBg"><label>Active Nav</label></div>
+              <div class="field"><label>Sidebar Width</label><input class="control token" data-key="sidebarWidth"></div>
+              <div class="field"><label>Progress H</label><input class="control token" data-key="progressHeight"></div>
+              <div class="field color-field" data-key="progressTrackBg"><label>Track BG</label></div>
+              <div class="field color-field" data-key="alertBg"><label>Alert BG</label></div>
+              <div class="field color-field" data-key="alertBorder"><label>Alert Border</label></div>
+            </div>
+          </div>
+
+          <div class="editor-actions">
+            <button class="btn primary" id="saveBtn">Save Local</button>
+            <button class="btn outline" id="randomBtn">Randomize</button>
+          </div>
+          <div class="hint">This file is static and will lead to crashes on some devices. This will have significantly less demo options as some elements refused to work with this format.</div>
+        </div>
+      </aside>
+
+      <main class="preview">
+        <nav class="navbar">
+          <div class="brand"><span class="logo"></span><span>LiteStyle Console</span></div>
+          <div class="navlinks">
+            <a class="navlink active" href="#">Overview</a>
+            <a class="navlink" href="#">Components</a>
+            <a class="navlink" href="#">Tokens</a>
+          </div>
+          <div class="row">
+            <span class="badge dynamic">Synced</span>
+            <span class="avatar">JP</span>
+          </div>
+        </nav>
+
+        <div class="app">
+          <aside class="sidebar">
+            <p class="section-title">Workspace</p>
+            <h2>Design Ops</h2>
+            <div class="sidebar-nav">
+              <a class="navlink active" href="#">Dashboard</a>
+              <a class="navlink" href="#">Buttons</a>
+              <a class="navlink" href="#">Badges</a>
+              <a class="navlink" href="#">Forms</a>
+              <a class="navlink" href="#">Tables</a>
+            </div>
+          </aside>
+
+          <section class="main">
+            <div class="row between">
+              <div>
+                <p class="section-title">Static Component Studio</p>
+                <h1>Live customizable CSS classes.</h1>
+              </div>
+              <div class="tabs">
+                <span class="tab active">Build</span>
+                <span class="tab">Audit</span>
+                <span class="tab">Ship</span>
+              </div>
+            </div>
+
+            <div class="grid">
+              <div class="card stack">
+                <span class="meta">Components</span>
+                <h2 style="font-size:34px;">42</h2>
+                <span class="badge soft success">Ready</span>
+              </div>
+              <div class="card stack">
+                <span class="meta">Theme Tokens</span>
+                <h2 style="font-size:34px;">50+</h2>
+                <span class="chip">Static editable</span>
+              </div>
+              <div class="card stack">
+                <span class="meta">Progress</span>
+                <h2 style="font-size:34px;">91%</h2>
+                <div class="progress"><span></span></div>
+              </div>
+            </div>
+
+            <div class="grid two">
+              <div class="card stack">
+                <div class="row between">
+                  <div>
+                    <p class="section-title">Actions</p>
+                    <h2>Buttons and badges</h2>
+                  </div>
+                  <span class="badge dynamic">Dynamic</span>
+                </div>
+                <div class="row">
+                  <button class="btn primary">Primary</button>
+                  <button class="btn soft">Soft</button>
+                  <button class="btn outline">Outline</button>
+                  <button class="btn glass">Glass</button>
+                  <button class="btn gradient">Gradient</button>
+                  <button class="btn danger">Danger</button>
+                </div>
+                <div class="row">
+                  <span class="badge solid">Solid</span>
+                  <span class="badge soft success">Success</span>
+                  <span class="badge outline warning">Warning</span>
+                  <span class="badge neon danger">Danger</span>
+                </div>
+              </div>
+
+              <div class="card stack">
+                <div>
+                  <p class="section-title">Forms</p>
+                  <h2>Input controls</h2>
+                </div>
+                <div class="grid two">
+                  <label><span class="label">Project</span><input class="input" value="LiteStyle Static"></label>
+                  <label><span class="label">Plan</span><select class="input"><option>Studio Pro</option></select></label>
+                </div>
+                <textarea class="input" rows="4">Static demo with live variables, local persistence, and component previews.</textarea>
+                <div class="row between">
+                  <span class="chip">No runtime server</span>
+                  <span class="switch"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid two">
+              <div class="card stack">
+                <div class="alert"><strong>InfinityFree safe.</strong><span class="meta">Upload this one HTML file and it runs as-is.</span></div>
+                <table class="table">
+                  <thead><tr><th>Element</th><th>Type</th><th>Status</th></tr></thead>
+                  <tbody>
+                    <tr><td>Navbar</td><td>Shell</td><td><span class="badge soft success">Ready</span></td></tr>
+                    <tr><td>Sidebar</td><td>Navigation</td><td><span class="badge soft">Live</span></td></tr>
+                    <tr><td>Table</td><td>Data</td><td><span class="badge outline warning">Demo</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="card stack">
+                <div>
+                  <p class="section-title">Flow</p>
+                  <h2>Timeline</h2>
+                </div>
+                <div class="timeline">
+                  <div class="timeline-item"><div><strong>Edit tokens</strong><p>Controls apply CSS variables directly to the page.</p></div></div>
+                  <div class="timeline-item"><div><strong>Preview instantly</strong><p>Buttons, badges, forms, nav, cards, and tables update live.</p></div></div>
+                  <div class="timeline-item"><div><strong>Save locally</strong><p>Settings persist in this browser with localStorage.</p></div></div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Saved.</div>
+
+  <script>
+    const root = document.getElementById('root');
+    const storageKey = 'litestyle-static-demo-theme';
+
+    const vars = {
+      accent: '--ls-accent',
+      accent2: '--ls-accent-2',
+      bgMain: '--ls-bg-main',
+      bgSurface: '--ls-bg-surface',
+      textMain: '--ls-text-main',
+      textMuted: '--ls-text-muted',
+      border: '--ls-border',
+      pagePad: '--ls-page-pad',
+      btnRadius: '--ls-btn-radius',
+      btnPadding: '--ls-btn-padding',
+      btnHeight: '--ls-btn-height',
+      btnFontSize: '--ls-btn-font-size',
+      btnWeight: '--ls-btn-weight',
+      badgeBg: '--ls-badge-bg',
+      badgeText: '--ls-badge-text',
+      badgeRadius: '--ls-badge-radius',
+      badgePadding: '--ls-badge-padding',
+      badgeTransform: '--ls-badge-transform',
+      inputBg: '--ls-input-bg',
+      inputBorder: '--ls-input-border',
+      inputRadius: '--ls-input-radius',
+      inputHeight: '--ls-input-height',
+      cardBg: '--ls-card-bg',
+      cardBorder: '--ls-card-border',
+      cardRadius: '--ls-card-radius',
+      cardPadding: '--ls-card-padding',
+      navbarBg: '--ls-navbar-bg',
+      sidebarBg: '--ls-sidebar-bg',
+      navActiveBg: '--ls-nav-active-bg',
+      sidebarWidth: '--ls-sidebar-width',
+      progressHeight: '--ls-progress-height',
+      progressTrackBg: '--ls-progress-track-bg',
+      alertBg: '--ls-alert-bg',
+      alertBorder: '--ls-alert-border'
+    };
+    const defaultTheme = {
+      accent: '#00b200',
+      accent2: '#14b8a6',
+      bgMain: '#08090d',
+      bgSurface: '#151923',
+      textMain: '#f5f7fb',
+      textMuted: '#98a2b3',
+      border: '#252a35',
+      pagePad: '20px',
+      btnType: 'solid',
+      btnRadius: '12px',
+      btnPadding: '10px 16px',
+      btnHeight: '40px',
+      btnFontSize: '14px',
+      btnWeight: '700',
+      badgeType: 'subtle',
+      badgeBg: '#2563eb',
+      badgeText: '#60a5fa',
+      badgeRadius: '999px',
+      badgePadding: '4px 10px',
+      badgeTransform: 'uppercase',
+      inputBg: '#0e1118',
+      inputBorder: '#252a35',
+      inputRadius: '12px',
+      inputHeight: '42px',
+      cardBg: '#11141c',
+      cardBorder: '#252a35',
+      cardRadius: '16px',
+      cardPadding: '16px',
+      navbarBg: '#151923',
+      sidebarBg: '#0c1017',
+      navActiveBg: '#14233b',
+      sidebarWidth: '238px',
+      progressHeight: '8px',
+      progressTrackBg: '#252a35',
+      alertBg: '#10213b',
+      alertBorder: '#28446c'
+    };
+    const presets = [
+      { accent: '#2563eb', accent2: '#14b8a6', bgMain: '#08090d', bgSurface: '#151923', cardBg: '#11141c', badgeBg: '#2563eb', badgeText: '#93c5fd' },
+      { accent: '#e11d48', accent2: '#f59e0b', bgMain: '#10090d', bgSurface: '#1c1117', cardBg: '#1a1117', badgeBg: '#e11d48', badgeText: '#fda4af' },
+      { accent: '#7c3aed', accent2: '#06b6d4', bgMain: '#0d0a16', bgSurface: '#171126', cardBg: '#15101f', badgeBg: '#7c3aed', badgeText: '#c4b5fd' },
+      { accent: '#16a34a', accent2: '#84cc16', bgMain: '#07100b', bgSurface: '#101b14', cardBg: '#0f1812', badgeBg: '#16a34a', badgeText: '#86efac' }
+    ];
+
+    function isColor(value) {
+      return /^#[0-9a-f]{6}$/i.test(value);
+    }
+
+    function buildColorInputs() {
+      document.querySelectorAll('.color-field').forEach((field) => {
+        const key = field.dataset.key;
+        const value = defaultTheme[key] || '#2563eb';
+
+        field.insertAdjacentHTML('beforeend', `
+          <div class="color-control">
+            <input type="color" data-picker="${key}" value="${value}">
+            <input class="control token" data-key="${key}" value="${value}">
+          </div>
+        `);
+      });
+    }
+
+    function applyToken(key, value) {
+      if (key === 'btnType') root.setAttribute('data-btn-type', value);
+      if (key === 'badgeType') root.setAttribute('data-badge-type', value);
+      if (vars[key]) root.style.setProperty(vars[key], value);
+    }
+
+    function currentTheme() {
+      const theme = {};
+
+      document.querySelectorAll('.token').forEach((control) => {
+        theme[control.dataset.key] = control.value;
+      });
+
+      return theme;
+    }
+
+    function applyTheme(theme) {
+      const merged = { ...defaultTheme, ...theme };
+
+      document.querySelectorAll('.token').forEach((control) => {
+        const key = control.dataset.key;
+        control.value = merged[key] ?? control.value;
+        applyToken(key, control.value);
+      });
+
+      document.querySelectorAll('[data-picker]').forEach((picker) => {
+        const value = merged[picker.dataset.picker];
+        if (isColor(value)) picker.value = value;
+      });
+    }
+
+    function wireControls() {
+      document.querySelectorAll('.token').forEach((control) => {
+        control.addEventListener('input', () => {
+          applyToken(control.dataset.key, control.value);
+
+          const picker = document.querySelector(`[data-picker="${control.dataset.key}"]`);
+          if (picker && isColor(control.value)) picker.value = control.value;
+        });
+      });
+
+      document.querySelectorAll('[data-picker]').forEach((picker) => {
+        picker.addEventListener('input', () => {
+          const input = document.querySelector(`.token[data-key="${picker.dataset.picker}"]`);
+          input.value = picker.value;
+          input.dispatchEvent(new Event('input', { bubbles: true }));
+        });
+      });
+    }
+
+    function showToast(text) {
+      const toast = document.getElementById('toast');
+      toast.textContent = text;
+      toast.classList.add('show');
+      window.clearTimeout(showToast.timer);
+      showToast.timer = window.setTimeout(() => toast.classList.remove('show'), 1600);
+    }
+
+    document.getElementById('saveBtn').addEventListener('click', () => {
+      localStorage.setItem(storageKey, JSON.stringify(currentTheme()));
+      showToast('Saved in this browser.');
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      localStorage.removeItem(storageKey);
+      applyTheme(defaultTheme);
+      showToast('Back to demo defaults.');
+    });
+
+    document.getElementById('randomBtn').addEventListener('click', () => {
+      const theme = presets[Math.floor(Math.random() * presets.length)];
+      applyTheme({ ...currentTheme(), ...theme });
+      showToast('Random theme applied.');
+    });
+
+    buildColorInputs();
+    wireControls();
+
+    try {
+      applyTheme(JSON.parse(localStorage.getItem(storageKey)) || defaultTheme);
+    } catch {
+      applyTheme(defaultTheme);
+    }
+  </script>
+</body>
+</html>
