@@ -1,0 +1,11 @@
+{
+    "name": "@litestyle/engine",
+    "version": "1.0.0",
+    "private": "true",
+    "type": "module",
+    "description": "Local GUI Design token compiler for litestyle",
+    "dependencies": {
+        "express":"5.2.1",
+        "vite":"8.0.16"
+    }
+}
